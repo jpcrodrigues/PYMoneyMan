@@ -6,13 +6,6 @@ from Models.Account import Account as Acc
 # if There are no registered accounts print there are no registed accounts yet
 # if there are registered accounts print the list
 
-# options:
-#  1 - List by name or number (if no parameter list all)
-#  2 - Create
-#  3 - Update
-#  4 - Delete
-
-
 def main():
     go_back = False
 
@@ -62,7 +55,9 @@ def __list_account():
     else:
         print("The existing accounts are:")
         for account in list_of_accounts:
+            print(f"******************************************************")
             print(account.to_string())
+        print(f"******************************************************\n")
 
     input("(Press enter to continue)")
 
@@ -201,7 +196,9 @@ def __update_account():
     else:
         print("The existing accounts are:")
         for account in list_of_accounts:
+            print(f"******************************************************\n")
             print(account.to_string())
+        print(f"******************************************************")
 
         while True:
             account_no = input("Input the account number from the list above: ")
@@ -385,7 +382,9 @@ def __delete_account():
         else:
             print("The existing accounts are:")
             for account in list_of_accounts:
+                print(f"******************************************************\n")
                 print(account.to_string())
+            print(f"******************************************************")
 
             while True:
                 account_no = input("Input the account number from the list above: ")

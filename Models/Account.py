@@ -11,7 +11,9 @@ class Account:
         self.income = 0
 
     def to_string(self):
-        return f"* {self.number}: {self.name} ({self.type})\n   -> Balance: {str(self.get_balance())} {self.currency}"
+        return (f"****** Account Name: {self.name} ******\n"
+                f"     * Account Number: {self.number} * Type: {self.type}\n"
+                f"     * Balance: {str(self.get_balance())} {self.currency}")
 
     def list_attributes(self):
         return (f"* Account Number: {self.number}\n"

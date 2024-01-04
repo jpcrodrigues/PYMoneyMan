@@ -1,7 +1,7 @@
-import Transaction
+from Models import Transaction
 
 
-class Income(Transaction):
+class Expense(Transaction.Transaction):
 
-    def __init__(self, value, date, categories, tag, comment):
-        super().__init__(-1, value, date, categories, tag, comment)
+    def __init__(self, account_no, sign, value, date, categorie, comment):
+        super().__init__(account_no, sign, value, date, categorie, comment)

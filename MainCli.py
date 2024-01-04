@@ -1,7 +1,7 @@
 from Utils import OsUtils as Os
 import AccountCli as AccCli
-import IncomeCli as InCli
-import ExpenseCli as ExCli
+import IncomeCli as IncCli
+import ExpenseCli as ExpCli
 
 
 def main():
@@ -38,18 +38,16 @@ def main():
 
 
 def __manage_account():
-    print("Option create bank account!")
     AccCli.main()
 
 
 def __manage_income():
-    print("Register money income")
-    InCli.main()
+    IncCli.main()
 
 
 def __manage_expense():
     print("Register bank expense")
-    ExCli.main()
+    ExpCli.main()
 
 
 def __leavin():
