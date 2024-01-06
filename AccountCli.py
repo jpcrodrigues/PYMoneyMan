@@ -3,9 +3,6 @@ from Controlers import AccountController as AccCtrl
 from Models.Account import Account as Acc
 
 
-# if There are no registered accounts print there are no registed accounts yet
-# if there are registered accounts print the list
-
 def main():
     go_back = False
 

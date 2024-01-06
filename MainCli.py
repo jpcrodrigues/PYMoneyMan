@@ -1,7 +1,7 @@
+import Constants
 from Utils import OsUtils as Os
 import AccountCli as AccCli
-import IncomeCli as IncCli
-import ExpenseCli as ExpCli
+import TransactionCli as TrxCli
 
 
 def main():
@@ -18,7 +18,7 @@ def main():
         """)
         print("Program options: ")
         print(" 1 - Manage Account(s)")
-        print(" 2 - Manage Income")
+        print(" 2 - Manage Income(s)")
         print(" 3 - Manage Expense(s)")
         print(" 4 - Exit")
         option = input("Select one option: ")
@@ -42,12 +42,11 @@ def __manage_account():
 
 
 def __manage_income():
-    IncCli.main()
+    TrxCli.main(Constants.TRANSACTION_TYPE_INCOME)
 
 
 def __manage_expense():
-    print("Register bank expense")
-    ExpCli.main()
+    TrxCli.main(Constants.TRANSACTION_TYPE_EXPENSE)
 
 
 def __leavin():

@@ -11,14 +11,13 @@ def reade(account_no=None, account_name=None):
     for result in list_of_results:
         number = result[0]
         name = result[1]
-        name = result[1]
         type = result[2]
         init_value = result[3]
         currency = result[4]
         color = result[5]
 
         # if the account number or name are filled then filter the results by the filter
-        if not account_no is None and account_no == number or not account_name is None and account_name == name:
+        if  account_no is not None and account_no == number or account_name is not None and account_name == name:
             account = Account(number, name, type, init_value, currency, color)
             list_of_accounts.append(account)
         if account_no is None and account_name is None:
