@@ -1,5 +1,7 @@
+import Constants
 from Utils import OsUtils as Os
 from Controlers import AccountController as AccCtrl
+from Controlers import TransactionController as TrxCtrl
 from Models.Account import Account as Acc
 
 
@@ -39,13 +41,13 @@ def __list_account():
     account_number = input("Filter by account number (press enter to skip): ")
 
     if not account_number == "":
-        list_of_accounts = AccCtrl.reade(account_no=account_number)
+        list_of_accounts = AccCtrl.read(account_no=account_number)
     else:
         account_name = input("Filter by account name (press enter to skip): ")
         if not account_name == "":
-            list_of_accounts = AccCtrl.reade(account_name=account_name)
+            list_of_accounts = AccCtrl.read(account_name=account_name)
         else:
-            list_of_accounts = AccCtrl.reade()
+            list_of_accounts = AccCtrl.read()
 
     if len(list_of_accounts) == 0:
         print("There are no accounts for the applied filters.")
@@ -66,7 +68,7 @@ def __create_account():
 
         if not number.isdigit():
             print("The account number must be a number.")
-        elif len(AccCtrl.reade(number)) > 0:
+        elif len(AccCtrl.read(number)) > 0:
             print("There is an account registered with the same number, please insert a diferent value.")
         else:
             break
@@ -187,7 +189,7 @@ def __create_account():
 def __update_account():
     print("### UPDATE ACCOUNT ###")
 
-    list_of_accounts = AccCtrl.reade()
+    list_of_accounts = AccCtrl.read()
     if len(list_of_accounts) == 0:
         print("There are no accounts registered at the moment, please create an account first.")
     else:
@@ -202,7 +204,7 @@ def __update_account():
             if not account_no.isdigit():
                 print("The account number must be a digit.")
             else:
-                list_of_accounts = AccCtrl.reade(account_no=account_no)
+                list_of_accounts = AccCtrl.read(account_no=account_no)
                 if len(list_of_accounts) > 0:
                     existing_account = list_of_accounts[0]
 
@@ -373,7 +375,7 @@ def __delete_account():
     option = input("(Type Y + enter to continue): ")
 
     if option.lower() == "y":
-        list_of_accounts = AccCtrl.reade()
+        list_of_accounts = AccCtrl.read()
         if len(list_of_accounts) == 0:
             print("There are no accounts registered at the moment, please create an account first.")
         else:
@@ -388,8 +390,9 @@ def __delete_account():
                 if not account_no.isdigit():
                     print("The account number must be a digit.")
                 else:
-                    if len(AccCtrl.reade(account_no=account_no)) > 0:
-                        # TODO detele the existing records from the CSV file
+                    if len(AccCtrl.read(account_no=account_no)) > 0:
+                        TrxCtrl.delete(transaction_type=Constants.TRANSACTION_TYPE_INCOME, account_no=account_no)
+                        TrxCtrl.delete(transaction_type=Constants.TRANSACTION_TYPE_EXPENSE, account_no=account_no)
                         AccCtrl.delete(account_no)
                         print("SUCCESS: Account deleted successfuly.")
                         input("(Press entre to continue)")
@@ -398,7 +401,6 @@ def __delete_account():
                         print("There are no accounts with that number.")
                         input("(Press entre to continue)")
                         break
-
     else:
         print("WARNING: Delete operation canceled!")
         input("(Press enter to continue)")
