@@ -6,8 +6,7 @@ from Models.Expense import Expense
 file_name = "Data/transaction.csv"
 
 
-def reade(transaction_type, transaction_id=None, account_no=None):
-    transaction = None
+def read(transaction_type, transaction_id=None, account_no=None):
     list_of_results = CsvU.read_file(file_name)
     list_of_transactions = []
 
@@ -19,6 +18,8 @@ def reade(transaction_type, transaction_id=None, account_no=None):
         date = result[4]
         category = result[5]
         comment = result[6]
+
+        transaction = None
 
         # if the account number or name are filled then filter the results by the filter
         if ((transaction_id is not None and transaction_id == trans_id
@@ -49,6 +50,12 @@ def create(transaction):
     CsvU.write_record(file_name, data)
 
 
-def delete(transaction_id=None, account_nos=None):
-    """id_list = [account_no]
-    CsvU.delete_records_by_ids(file_name, id_list)"""
+def delete(transaction_type, transaction_id=None, account_no=None):
+    list_of_transaction_ids = []
+
+    list_of_transactions = read(transaction_type, transaction_id, account_no)
+
+    for transaction in list_of_transactions:
+        list_of_transaction_ids.append(transaction.transaction_id)
+
+    CsvU.delete_records_by_ids(file_name, list_of_transaction_ids)

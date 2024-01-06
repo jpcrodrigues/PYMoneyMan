@@ -1,10 +1,12 @@
+import Constants
 from Utils import CSVUtils as CsvU
 from Models.Account import Account
+from Controlers import TransactionController as TrxCtrl
 
 file_name = "Data/accounts.csv"
 
 
-def reade(account_no=None, account_name=None):
+def read(account_no=None, account_name=None):
     list_of_results = CsvU.read_file(file_name)
     list_of_accounts = []
 
@@ -17,11 +19,12 @@ def reade(account_no=None, account_name=None):
         color = result[5]
 
         # if the account number or name are filled then filter the results by the filter
-        if  account_no is not None and account_no == number or account_name is not None and account_name == name:
+        if ((account_no is not None and account_no == number or account_name is not None and account_name == name)
+                or account_no is None and account_name is None):
             account = Account(number, name, type, init_value, currency, color)
-            list_of_accounts.append(account)
-        if account_no is None and account_name is None:
-            account = Account(number, name, type, init_value, currency, color)
+            # fill the expenses and incomes to update the account balance
+            account.set_incomes(TrxCtrl.read(Constants.TRANSACTION_TYPE_INCOME, account_no=number))
+            account.set_expenses(TrxCtrl.read(Constants.TRANSACTION_TYPE_EXPENSE, account_no=number))
             list_of_accounts.append(account)
 
     return list_of_accounts

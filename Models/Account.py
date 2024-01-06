@@ -7,8 +7,8 @@ class Account:
         self.init_value = init_value
         self.currency = currency
         self.color = color
-        self.expenses = 0
-        self.income = 0
+        self.expense_total = 0.0
+        self.income_total = 0.0
 
     def to_string(self):
         return (f"****** Account Name: {self.name} ******\n"
@@ -24,4 +24,12 @@ class Account:
                 f"* Color: {self.color}")
 
     def get_balance(self):
-        return int(self.init_value) + int(self.income) - int(self.expenses)
+        return int(self.init_value) + int(self.income_total) - int(self.expense_total)
+
+    def set_expenses(self, expenses_list):
+        for expense in expenses_list:
+            self.expense_total += float(expense.value)
+
+    def set_incomes(self, income_list):
+        for income in income_list:
+            self.income_total += float(income.value)

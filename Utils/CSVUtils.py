@@ -15,7 +15,7 @@ def read_file(file_name):
 
 def write_record(file_name, record):
     with open(file_name, mode="a") as csv_file:
-        csv.writer(csv_file).writerow(record)
+        csv.writer(csv_file, lineterminator="\n").writerow(record)
 
 
 def update_record(file_name, record):
@@ -30,7 +30,7 @@ def update_record(file_name, record):
                 records.append(line)
 
         with open(file_name, "w") as csv_write:
-            writer = csv.writer(csv_write)
+            writer = csv.writer(csv_write, lineterminator="\n")
             writer.writerows(records)
 
 
@@ -41,10 +41,9 @@ def delete_records_by_ids(file_name, id_list):
         reader = csv.reader(csv_reader)
 
         for line in reader:
-            for identifier in id_list:
-                if line[0] != identifier:
-                    records.append(line)
+            if line[0] not in id_list:
+                records.append(line)
 
         with open(file_name, "w") as csv_write:
-            writer = csv.writer(csv_write)
+            writer = csv.writer(csv_write, lineterminator="\n")
             writer.writerows(records)
