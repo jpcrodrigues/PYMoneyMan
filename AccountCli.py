@@ -6,9 +6,8 @@ from Models.Account import Account as Acc
 
 
 def main():
-    go_back = False
 
-    while not go_back:
+    while True:
         Os.clear()
         print("### ACCOUNT OPTIONS ###")
         print("1 - List accounts")
@@ -29,7 +28,6 @@ def main():
             case "4":
                 __delete_account()
             case "5":
-                go_back = True
                 break
             case _:
                 print("Please insert a valid option.")
@@ -37,6 +35,11 @@ def main():
 
 def __list_account():
     print("### LIST ACCOUNTS ###")
+
+    if not AccCtrl.system_has_records():
+        print("There are no accounts registered. Please start by registering one account.")
+        input("(press enter to continue)")
+        return
 
     account_number = input("Filter by account number (press enter to skip): ")
 
@@ -56,13 +59,14 @@ def __list_account():
         for account in list_of_accounts:
             print(f"******************************************************")
             print(account.to_string())
-        print(f"******************************************************\n")
+        print(f"******************************************************")
 
     input("(Press enter to continue)")
 
 
 def __create_account():
     print("### CREATE ACCOUNT ###")
+
     while True:
         number = input("Please insert the account number: ")
 
@@ -189,13 +193,18 @@ def __create_account():
 def __update_account():
     print("### UPDATE ACCOUNT ###")
 
+    if not AccCtrl.system_has_records():
+        print("There are no accounts registered. Please start by registering one account.")
+        input("(press Enter to continue)")
+        return
+
     list_of_accounts = AccCtrl.read()
     if len(list_of_accounts) == 0:
         print("There are no accounts registered at the moment, please create an account first.")
     else:
         print("The existing accounts are:")
         for account in list_of_accounts:
-            print(f"******************************************************\n")
+            print(f"******************************************************")
             print(account.to_string())
         print(f"******************************************************")
 
@@ -358,16 +367,21 @@ def __update_account():
                     else:
                         print("WARNING: Account update aborted!")
 
-                    input("(Press entre to continue)")
+                    input("(Press enter to continue)")
                     break
                 else:
                     print("There are no accounts with that number.")
-                    input("(Press entre to continue)")
+                    input("(Press enter to continue)")
                     break
 
 
 def __delete_account():
     print("### DELETE ACCOUNT ###")
+
+    if not AccCtrl.system_has_records():
+        print("There are no accounts registered. Please start by registering one account.")
+        input("(press enter to continue)")
+        return
 
     print("\nWARNING: Deleting an account will also delete all income and expenses records.\n"
           "Are you sure you want to proceed?")
@@ -381,7 +395,7 @@ def __delete_account():
         else:
             print("The existing accounts are:")
             for account in list_of_accounts:
-                print(f"******************************************************\n")
+                print(f"******************************************************")
                 print(account.to_string())
             print(f"******************************************************")
 
@@ -395,11 +409,11 @@ def __delete_account():
                         TrxCtrl.delete(transaction_type=Constants.TRANSACTION_TYPE_EXPENSE, account_no=account_no)
                         AccCtrl.delete(account_no)
                         print("SUCCESS: Account deleted successfuly.")
-                        input("(Press entre to continue)")
+                        input("(Press enter to continue)")
                         break
                     else:
                         print("There are no accounts with that number.")
-                        input("(Press entre to continue)")
+                        input("(Press enter to continue)")
                         break
     else:
         print("WARNING: Delete operation canceled!")

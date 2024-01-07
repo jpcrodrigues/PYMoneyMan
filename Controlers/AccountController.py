@@ -6,6 +6,14 @@ from Controlers import TransactionController as TrxCtrl
 file_name = "Data/accounts.csv"
 
 
+def system_has_records():
+    list_of_accounts = read()
+    if len(list_of_accounts) > 0:
+        return True
+    else:
+        return False
+
+
 def read(account_no=None, account_name=None):
     list_of_results = CsvU.read_file(file_name)
     list_of_accounts = []

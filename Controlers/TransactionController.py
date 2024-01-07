@@ -6,6 +6,14 @@ from Models.Expense import Expense
 file_name = "Data/transaction.csv"
 
 
+def system_has_records(transaction_type):
+    list_of_transactions = read(transaction_type)
+    if len(list_of_transactions) > 0:
+        return True
+    else:
+        return False
+
+
 def read(transaction_type, transaction_id=None, account_no=None):
     list_of_results = CsvU.read_file(file_name)
     list_of_transactions = []

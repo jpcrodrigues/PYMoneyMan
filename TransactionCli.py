@@ -38,6 +38,12 @@ def main(transaction_type):
 def __list(transaction_type):
     print(f"### LIST {transaction_type.upper()} RECORD(s) ###")
 
+    if not TrxCtrl.system_has_records(transaction_type):
+        print(f"There are no {transaction_type.lower()} records registered. Please start by registering one "
+              f"{transaction_type.lower()} record.")
+        input("(press Enter to continue)")
+        return
+
     account_number = input(f"Filter {transaction_type.lower()} records by account number (press enter to skip): ")
 
     if not account_number == "":
@@ -57,13 +63,18 @@ def __list(transaction_type):
         for transaction in list_of_transactions:
             print(f"******************************************************")
             print(transaction.list_attributes())
-        print(f"******************************************************\n")
+        print(f"******************************************************")
 
     input("(Press enter to continue)")
 
 
 def __create(transaction_type):
     print(f"### CREATE AN {transaction_type.upper()} RECORD ###")
+
+    if not AccCtrl.system_has_records():
+        print("There are no accounts registered. Please start by registering one account.")
+        input("(press Enter to continue)")
+        return
 
     option = input(f"Before creating an {transaction_type.lower()} record would you like "
                    f"to check all the existing acounts (type y + enter to list or enter to skip)?")
@@ -133,6 +144,12 @@ def __create(transaction_type):
 def __delete(transaction_type):
     print(f"### DELETE {transaction_type.upper()} RECORD ###")
 
+    if not TrxCtrl.system_has_records(transaction_type):
+        print(f"There are no {transaction_type.lower()} records registered. Please start by registering one "
+              f"{transaction_type.lower()} record.")
+        input("(press Enter to continue)")
+        return
+
     list_of_transactions = TrxCtrl.read(transaction_type)
 
     if len(list_of_transactions) == 0:
@@ -161,7 +178,7 @@ def __delete(transaction_type):
                     if option.lower() == "y":
                         list_of_accounts = AccCtrl.read()
                         for account in list_of_accounts:
-                            print(f"******************************************************\n")
+                            print(f"******************************************************")
                             print(account.to_string())
                         print(f"******************************************************")
 
@@ -190,7 +207,7 @@ def __delete(transaction_type):
                     if option.lower() == "y":
                         list_of_transactions = TrxCtrl.read(transaction_type)
                         for transaction in list_of_transactions:
-                            print(f"******************************************************\n")
+                            print(f"******************************************************")
                             print(transaction.list_attributes())
                         print(f"******************************************************")
 
